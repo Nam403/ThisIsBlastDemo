@@ -12,6 +12,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] private TextMeshPro bulletCountText;
     private bool isShooting = false;
     private float shootTimer = 0f;
+    private ShooterColumn parentShooterColumn;
 
     // Start is called before the first frame update
     void Start()
@@ -36,9 +37,22 @@ public class Shooter : MonoBehaviour
             
             if (bulletCount <= 0)
             {
+                if(parentShooterColumn != null)
+                {
+                    parentShooterColumn.UpdateColumn();
+                }
+                else 
+                { 
+                    Debug.LogWarning("Parent Shooter Column is null!"); 
+                }
                 StartCoroutine(CheckAfterShootAndDestroy());
             }
         }
+    }
+
+    public void SetParentShooterColumn(ShooterColumn shooterColumn)
+    {
+        parentShooterColumn = shooterColumn;
     }
 
     private void OnMouseDown()
@@ -49,7 +63,7 @@ public class Shooter : MonoBehaviour
 
     private void ChangeShootingState()
     {
-        if (isShooting == false)
+        if (isShooting == false && parentShooterColumn.ShooterCanActived(transform.position.y) == true)
         {
             Debug.Log("Enabling shooting");
             isShooting = true;
@@ -58,7 +72,7 @@ public class Shooter : MonoBehaviour
 
     private void Shoot()
     {
-        int indexTarget = Spawner.Instance.GetColumnIndexWithColor(color);
+        int indexTarget = BlockManager.Instance.GetColumnIndexWithColor(color);
         if (indexTarget >= 0 && bulletCount > 0)
         {
             Debug.Log("Shooting");
@@ -70,15 +84,43 @@ public class Shooter : MonoBehaviour
         }
         else
         {
-            Debug.Log("Can not shoot!");
+            if(indexTarget < 0)
+            {
+                Debug.Log("No target found for color: " + color);
+            }
+            else
+            {
+                Debug.Log("No bullets left to shoot.");
+            }
         }
     }
 
     private IEnumerator CheckAfterShootAndDestroy()
     {
         yield return new WaitForSeconds(0.5f);
-        Spawner.Instance.CheckAllColumnSize();
+        BlockManager.Instance.CheckAllColumnSize();
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
+    }
+
+    public void SetColor(Color newColor)
+    {
+        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            Debug.Log("Setting shooter color to: " + newColor);
+            sr.color = new Color(newColor.r, newColor.g, newColor.b, 1f); //Make sure alpha is 1
+        }
+        else
+        {
+            Debug.LogWarning("SpriteRenderer of shooter is null!");
+        }
+        this.color = newColor;
+    }
+
+    public void SetBulletCount(int count)
+    {
+        this.bulletCount = count;
+        bulletCountText.text = bulletCount.ToString();
     }
 }

@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        Vector3 dir = Spawner.Instance.GetColumnPositionWithId(indexColumnTarget) - transform.position;
+        Vector3 dir = BlockManager.Instance.GetColumnPositionWithId(indexColumnTarget) - transform.position;
         float distanceThisFrame = speed * Time.deltaTime;
 
         if (dir.magnitude <= distanceThisFrame)
@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
 
     public void SetSpeed(float time)
     {
-        Vector3 dir = Spawner.Instance.GetColumnPositionWithId(indexColumnTarget) - transform.position;
+        Vector3 dir = BlockManager.Instance.GetColumnPositionWithId(indexColumnTarget) - transform.position;
         speed = dir.magnitude / time + 1f;
     }
 
@@ -47,6 +47,6 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject);
         // Implement what happens when the bullet hits the target
-        Spawner.Instance.UpdateColumnWithId(indexColumnTarget);
+        BlockManager.Instance.UpdateColumnWithId(indexColumnTarget);
     }
 }

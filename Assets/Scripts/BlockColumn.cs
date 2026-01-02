@@ -11,25 +11,23 @@ public class BlockColumn : MonoBehaviour
 
     private List<Block> blocks = new List<Block>();
 
-    // Start is called before the first frame update
-    void Start()
+    public void SpawnBlocks(int blockCount, Color[] color)
     {
-        SpawnBlocks();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void SpawnBlocks()
-    {
+        numberOfBlocks = blockCount;
+        blocks.Clear();
         Vector3 vectorDistance = new Vector3(0, distanceBlock, 0);
         for(int i = 0; i < numberOfBlocks; i++)
         {
             Block newBlock = Instantiate(blockPrefab, transform.position + i * vectorDistance, transform.rotation);
-            newBlock.SetIndexText(i);
+            //newBlock.SetIndexText(i);
+            if (color[i] == null)
+            {
+                Debug.LogWarning("Color of block at index " + i + " is null!");
+            }
+            else
+            {
+                newBlock.SetColor(color[i]);
+            }   
             Debug.Log("Spawned Block at index: " + i + " with position " + newBlock.transform.position.x + "-" + newBlock.transform.position.y);
             blocks.Add(newBlock);
         }
@@ -43,7 +41,7 @@ public class BlockColumn : MonoBehaviour
         for (int i = 0; i < blocks.Count; i++)
         {
             blocks[i].transform.position -= step;
-            blocks[i].SetIndexText(i);
+            //blocks[i].SetIndexText(i);
         }    
     }
 
@@ -60,5 +58,11 @@ public class BlockColumn : MonoBehaviour
     public int CheckColumnSize()
     {
         return blocks.Count;
+    }
+
+    public void SetColorForBlock(int index, Color color)
+    {
+        if (index < 0 || index >= blocks.Count) return;
+        blocks[index].SetColor(color);
     }
 }
