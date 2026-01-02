@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlockColumn : MonoBehaviour
@@ -10,23 +11,41 @@ public class BlockColumn : MonoBehaviour
     [SerializeField] private int numberOfBlocks = 10;
 
     private List<Block> blocks = new List<Block>();
+    private BlockManager parent;
+    private bool isEmpty = false;
 
-    public void SpawnBlocks(int blockCount, Color[] color)
+    private void Update()
     {
-        numberOfBlocks = blockCount;
+        if(blocks.Count == 0 && isEmpty == false)
+        {
+            isEmpty = true;
+            parent.UpdateNumberOfBlocks(numberOfBlocks);
+            Debug.Log("Block Column is empty, notifying Block Manager.");
+        }
+    }
+
+    public void SetParent(BlockManager blockManager)
+    {
+        parent = blockManager;
+    }
+
+    public void SpawnBlocks(List<Color32> colors)
+    {
+        isEmpty = false;
+        numberOfBlocks = colors.Count;
         blocks.Clear();
         Vector3 vectorDistance = new Vector3(0, distanceBlock, 0);
         for(int i = 0; i < numberOfBlocks; i++)
         {
             Block newBlock = Instantiate(blockPrefab, transform.position + i * vectorDistance, transform.rotation);
             //newBlock.SetIndexText(i);
-            if (color[i] == null)
+            if (colors[i].Equals(null))
             {
                 Debug.LogWarning("Color of block at index " + i + " is null!");
             }
             else
             {
-                newBlock.SetColor(color[i]);
+                newBlock.SetColor(colors[i]);
             }   
             Debug.Log("Spawned Block at index: " + i + " with position " + newBlock.transform.position.x + "-" + newBlock.transform.position.y);
             blocks.Add(newBlock);
@@ -45,7 +64,7 @@ public class BlockColumn : MonoBehaviour
         }    
     }
 
-    public bool HeadColumnIsColor(Color color)
+    public bool HeadColumnIsColor(Color32 color)
     {
         if (blocks.Count == 0) return false;
         if (blocks[0].isColor(color))
@@ -60,7 +79,7 @@ public class BlockColumn : MonoBehaviour
         return blocks.Count;
     }
 
-    public void SetColorForBlock(int index, Color color)
+    public void SetColorForBlock(int index, Color32 color)
     {
         if (index < 0 || index >= blocks.Count) return;
         blocks[index].SetColor(color);

@@ -11,23 +11,23 @@ public class ShooterColumn : MonoBehaviour
 
     private List<Shooter> shooters = new List<Shooter>();
 
-    public void SpawnShooters(int blockCount, Color[] color, int[] bulletCounts)
+    public void SpawnShooters(List<ShooterData> shooterDatas)
     {
-        numberOfShooters = blockCount;
+        numberOfShooters = shooterDatas.Count;
         shooters.Clear();
         Vector3 vectorDistance = new Vector3(0, distanceShooter, 0);
         for (int i = 0; i < numberOfShooters; i++)
         {
             Shooter newShooter = Instantiate(shooterPrefab, transform.position - i * vectorDistance, transform.rotation);
-            if (color[i] == null)
+            if (shooterDatas[i].color.Equals(null))
             {
                 Debug.LogWarning("Color of shooter at index " + i + " is null!");
             }
             else
             {
-                newShooter.SetColor(color[i]);
+                newShooter.SetColor(shooterDatas[i].color);
             }
-            newShooter.SetBulletCount(bulletCounts[i]);
+            newShooter.SetBulletCount(shooterDatas[i].bulletCount);
             Debug.Log("Spawned Shooter at index: " + i + " with position " + newShooter.transform.position.x + "-" + newShooter.transform.position.y);
             newShooter.SetParentShooterColumn(this);
             shooters.Add(newShooter);

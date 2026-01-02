@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,26 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelData", menuName = "ScriptableObjects/LevelData")]
 public class LevelData : ScriptableObject
 {
-    [Header("Block Colors")] 
-    public Color[] blockColors;
-    public int blockColumnCount;
+    [Header("Block Colors")]
+    [SerializeField] public BlockDataColumn[] blockDataColumns;
 
     [Header("Shooter Settings")]
-    public int shooterColumnCount;
-    public Color[] shooterColors;
-    public int[] shooterBulletCounts;
+    [SerializeField] public ShooterDataColumn[] shooterDataColumns;
+}
+
+[Serializable]
+public class BlockDataColumn
+{
+    public List<Color32> colors;
+}
+[Serializable]
+public class ShooterDataColumn
+{
+    public List<ShooterData> shooterDatas;
+}
+[Serializable]
+public struct ShooterData
+{
+    public Color32 color;
+    public int bulletCount;
 }

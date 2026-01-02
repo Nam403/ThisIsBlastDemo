@@ -14,6 +14,8 @@ public class BlockManager : MonoBehaviour
     private Dictionary<Color32, int> missIndexComs = new Dictionary<Color32, int>();
     
     private BlockColumn[] blockColumns;
+    private int numberOfBlocks;
+    private bool levelCompleted = false;
 
     public static BlockManager Instance { get; private set; }
     private void Awake()
@@ -27,25 +29,50 @@ public class BlockManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void InitDictionaryForSearch(Color[] colors)
+    private void Update()
+    {
+        if (numberOfBlocks == 0 && levelCompleted == false)
+        {
+            CompleteLevel();
+        }
+    }
+
+    private void CompleteLevel()
+    {
+        levelCompleted = true;
+        Debug.Log("Level Completed!");
+        // Implement level completion logic here
+    }
+
+    public void InitDictionaryForSearch(BlockDataColumn[] blockDataColumns)
     {
         searchIndexColumns.Clear();
         missIndexComs.Clear();
-        foreach (Color color in colors)
+        foreach (BlockDataColumn column in blockDataColumns)
         {
-            if (!searchIndexColumns.ContainsKey((Color32)color))
+            foreach(Color32 color in column.colors)
+            if (!searchIndexColumns.ContainsKey(color))
             {
-                searchIndexColumns[(Color32)color] = 0;
-                missIndexComs[(Color32)color] = 0;
+                searchIndexColumns[color] = 0;
+                missIndexComs[color] = 0;
             }
         }
     }
 
-    public void SpawnBlockColumns(int numberOfColumns, Color[] blockColors)
+    public void UpdateNumberOfBlocks(int num)
     {
-        this.numberOfColumns = numberOfColumns;
-        int numberOfBlocksPerColumn = blockColors.Length / numberOfColumns;
-        Color[] tempColor = new Color[numberOfBlocksPerColumn];
+        numberOfBlocks -= num;
+    }
+
+    public void SpawnBlockColumns(BlockDataColumn[] blockDataColumns)
+    {
+        levelCompleted = false;
+        numberOfBlocks = 0;
+        for(int i = 0; i < blockDataColumns.Length; i++)
+        {
+            numberOfBlocks += blockDataColumns[i].colors.Count;
+        }
+        this.numberOfColumns = blockDataColumns.Length;
         rootPosition.x = -((1f * numberOfColumns) / 2f - .5f) * distanceColumn;
         blockColumns = new BlockColumn[numberOfColumns];
         Vector3 step = new Vector3(distanceColumn, 0, 0);
@@ -53,38 +80,34 @@ public class BlockManager : MonoBehaviour
         {
             BlockColumn newBlockColumn = Instantiate(blockColumnPrefab, rootPosition + i * step, transform.rotation);
             blockColumns[i] = newBlockColumn;
-            for(int j = 0; j < numberOfBlocksPerColumn; j++)
-            {
-                tempColor[j] = blockColors[i * numberOfBlocksPerColumn + j];
-            }
-            blockColumns[i].SpawnBlocks(numberOfBlocksPerColumn, tempColor);
+            blockColumns[i].SpawnBlocks(blockDataColumns[i].colors);
+            blockColumns[i].SetParent(this);
             Debug.Log("Spawned Block Column");
         }
     }
 
-    public int GetColumnIndexWithColor(Color color)
+    public int GetColumnIndexWithColor(Color32 color)
     {
         int answer = -1;
-        Color32 color32 = (Color32)color;
-        while (missIndexComs[color32] < numberOfColumns)
+        while (missIndexComs[color] < numberOfColumns)
         {
-            if (blockColumns[searchIndexColumns[color32]].HeadColumnIsColor(color) == true)
+            if (blockColumns[searchIndexColumns[color]].HeadColumnIsColor(color) == true)
             {
-                missIndexComs[(Color32)color] = 0;
-                answer = searchIndexColumns[color32];
-                Debug.Log("Return column have index: " + searchIndexColumns[color32]);
-                searchIndexColumns[color32] = (searchIndexColumns[color32] + 1) % numberOfColumns;
+                missIndexComs[color] = 0;
+                answer = searchIndexColumns[color];
+                Debug.Log("Return column have index: " + searchIndexColumns[color]);
+                searchIndexColumns[color] = (searchIndexColumns[color] + 1) % numberOfColumns;
                 return answer;
             }
             else
             {
-                Debug.Log("Missed column at index: " + searchIndexColumns[color32]);
-                searchIndexColumns[color32] = (searchIndexColumns[color32] + 1) % numberOfColumns;
-                missIndexComs[color32]++; 
+                Debug.Log("Missed column at index: " + searchIndexColumns[color]);
+                searchIndexColumns[color] = (searchIndexColumns[color] + 1) % numberOfColumns;
+                missIndexComs[color]++; 
             }
         }
-        missIndexComs[color32] = 0;
-        searchIndexColumns[color32] = 0;
+        missIndexComs[color] = 0;
+        searchIndexColumns[color] = 0;
         return answer;
     }
 

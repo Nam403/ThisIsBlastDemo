@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour {
         this.level = level;
         //levelData = Resources.Load<LevelData>($"ScriptableObjects/LevelData{level}");
 
-        blockManager.SpawnBlockColumns(levelData.blockColumnCount, levelData.blockColors);
-        blockManager.InitDictionaryForSearch(levelData.shooterColors);
-        shooterManager.SpawnShooterColumns(levelData.shooterColumnCount, levelData.shooterColors, levelData.shooterBulletCounts);
+        blockManager.SpawnBlockColumns(levelData.blockDataColumns);
+        blockManager.InitDictionaryForSearch(levelData.blockDataColumns);
+        shooterManager.SpawnShooterColumns(levelData.shooterDataColumns);
     }
 }

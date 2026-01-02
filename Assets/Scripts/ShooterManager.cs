@@ -23,23 +23,16 @@ public class ShooterManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void SpawnShooterColumns(int numberOfColumns, Color[] shooterColors, int[] shooterCount)
+    public void SpawnShooterColumns(ShooterDataColumn[] shooterDataColumns)
     {
-        this.numberOfColumns = numberOfColumns;
-        int numberOfShooterPerColumn = shooterColors.Length / numberOfColumns;
-        Color[] tempColor = new Color[numberOfShooterPerColumn];
-        int[] tempCount = new int[numberOfShooterPerColumn];
+        shooterColumns.Clear();
+        this.numberOfColumns = shooterDataColumns.Length;
         rootPosition.x = -((1f * numberOfColumns) / 2f - .5f) * distanceColumn;
         Vector3 step = new Vector3(distanceColumn, 0, 0);
         for (int i = 0; i < numberOfColumns; i++)
         {
             ShooterColumn newShooterColumn = Instantiate(shooterColumnPrefab, rootPosition + i * step, transform.rotation);
-            for (int j = 0; j < numberOfShooterPerColumn; j++)
-            {
-                tempColor[j] = shooterColors[i * numberOfShooterPerColumn + j];
-                tempCount[j] = shooterCount[i * numberOfShooterPerColumn + j];
-            }
-            newShooterColumn.SpawnShooters(numberOfShooterPerColumn, tempColor, tempCount);
+            newShooterColumn.SpawnShooters(shooterDataColumns[i].shooterDatas);
             shooterColumns.Add(newShooterColumn);
             Debug.Log("Spawned Shooter Column");
         }

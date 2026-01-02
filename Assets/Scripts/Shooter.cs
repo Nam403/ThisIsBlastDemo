@@ -6,7 +6,7 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     [SerializeField] private int bulletCount = 50;
-    [SerializeField] private Color color = Color.white;
+    [SerializeField] private Color32 color;
     [SerializeField] private float shootRate = 10f;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private TextMeshPro bulletCountText;
@@ -103,7 +103,7 @@ public class Shooter : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetColor(Color newColor)
+    public void SetColor(Color32 newColor)
     {
         SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
         if (sr != null)

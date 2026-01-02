@@ -6,10 +6,10 @@ using UnityEngine.Rendering;
 
 public class Block : MonoBehaviour
 {
-    [SerializeField] private Color color = Color.white;
+    [SerializeField] private Color32 color;
     [SerializeField] private TextMeshPro indexText;
 
-    public bool isColor(Color targetColor)
+    public bool isColor(Color32 targetColor)
     {
         float eps = 0.01f;
         return Mathf.Abs(color.r - targetColor.r) <= eps
@@ -29,7 +29,7 @@ public class Block : MonoBehaviour
         }
     }
 
-    public void SetColor(Color newColor)
+    public void SetColor(Color32 newColor)
     {
         SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
         if (sr != null)

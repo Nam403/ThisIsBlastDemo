@@ -12,110 +12,225 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50bc7571b1dcacf4c8454d377a0148f2, type: 3}
   m_Name: LevelData1
   m_EditorClassIdentifier: 
-  blockColors:
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  blockColumnCount: 10
-  shooterColumnCount: 2
-  shooterColors:
-  - {r: 1, g: 1, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  shooterBulletCounts: 3200000032000000
+  blockDataColumns:
+  - colors:
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+  - colors:
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+  - colors:
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+  - colors:
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+  - colors:
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+    - serializedVersion: 2
+      rgba: 65535
+  - colors:
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+  - colors:
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+  - colors:
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+  - colors:
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+  - colors:
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+    - serializedVersion: 2
+      rgba: 255
+  shooterDataColumns:
+  - shooterDatas:
+    - color:
+        serializedVersion: 2
+        rgba: 65535
+      bulletCount: 50
+  - shooterDatas:
+    - color:
+        serializedVersion: 2
+        rgba: 255
+      bulletCount: 50
