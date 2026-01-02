@@ -3,15 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour { 
-    [SerializeField] LevelData levelData;
-    [SerializeField] int level = 1;
-    [SerializeField] BlockManager blockManager;
-    [SerializeField] ShooterManager shooterManager;
-    
+    [SerializeField] private LevelData levelData;
+    private int level = 3;
+    [SerializeField] private BlockManager blockManager;
+    [SerializeField] private ShooterManager shooterManager;
+
+    public static GameManager Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        SetUpLevel(1);
+        SetUpLevel(level);
     }
 
     // Update is called once per frame
@@ -23,10 +35,16 @@ public class GameManager : MonoBehaviour {
     private void SetUpLevel(int level)
     {
         this.level = level;
-        //levelData = Resources.Load<LevelData>($"ScriptableObjects/LevelData{level}");
-
-        blockManager.SpawnBlockColumns(levelData.blockDataColumns);
-        blockManager.InitDictionaryForSearch(levelData.blockDataColumns);
-        shooterManager.SpawnShooterColumns(levelData.shooterDataColumns);
+        levelData = Resources.Load<LevelData>($"LevelDatas/LevelData{level}");
+        if (levelData != null) {
+            blockManager.SpawnBlockColumns(levelData.blockDataColumns);
+            blockManager.InitDictionaryForSearch(levelData.blockDataColumns);
+            shooterManager.SpawnShooterColumns(levelData.shooterDataColumns); 
+            shooterManager.InitEnableShooterRow(levelData.numberEnableShooter);
+        }
+        else
+        {
+            Debug.LogError($"LevelData{level} not found in Resources/ScriptableObjects/");
+        }
     }
 }

@@ -36,7 +36,6 @@ public class ShooterColumn : MonoBehaviour
 
     public void UpdateColumn()
     {
-        Destroy(shooters[0].gameObject);
         shooters.Remove(shooters[0]);
         Vector3 step = new Vector3(0, distanceShooter, 0);
         for (int i = 0; i < shooters.Count; i++)
@@ -45,10 +44,9 @@ public class ShooterColumn : MonoBehaviour
         }
     }
 
-    public bool ShooterCanActived(float yPosition)
+    public bool IsHeadOfColumn(Shooter shooter)
     {
-        if (shooters.Count == 0) return false;
-        if (math.abs(shooters[0].transform.position.y - yPosition) <= .1f)
+        if (shooters.Count > 0 && shooters[0] == shooter)
         {
             return true;
         }

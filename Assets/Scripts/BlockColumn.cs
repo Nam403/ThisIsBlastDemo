@@ -11,7 +11,6 @@ public class BlockColumn : MonoBehaviour
     [SerializeField] private int numberOfBlocks = 10;
 
     private List<Block> blocks = new List<Block>();
-    private BlockManager parent;
     private bool isEmpty = false;
 
     private void Update()
@@ -19,14 +18,9 @@ public class BlockColumn : MonoBehaviour
         if(blocks.Count == 0 && isEmpty == false)
         {
             isEmpty = true;
-            parent.UpdateNumberOfBlocks(numberOfBlocks);
+            BlockManager.Instance.UpdateNumberOfBlocks(numberOfBlocks);
             Debug.Log("Block Column is empty, notifying Block Manager.");
         }
-    }
-
-    public void SetParent(BlockManager blockManager)
-    {
-        parent = blockManager;
     }
 
     public void SpawnBlocks(List<Color32> colors)

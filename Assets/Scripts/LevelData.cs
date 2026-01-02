@@ -11,6 +11,7 @@ public class LevelData : ScriptableObject
 
     [Header("Shooter Settings")]
     [SerializeField] public ShooterDataColumn[] shooterDataColumns;
+    public int numberEnableShooter;
 }
 
 [Serializable]

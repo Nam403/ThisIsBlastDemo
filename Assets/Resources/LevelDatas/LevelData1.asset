@@ -234,3 +234,4 @@ MonoBehaviour:
         serializedVersion: 2
         rgba: 255
       bulletCount: 50
+  numberEnableShooter: 2

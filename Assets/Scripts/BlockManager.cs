@@ -81,7 +81,6 @@ public class BlockManager : MonoBehaviour
             BlockColumn newBlockColumn = Instantiate(blockColumnPrefab, rootPosition + i * step, transform.rotation);
             blockColumns[i] = newBlockColumn;
             blockColumns[i].SpawnBlocks(blockDataColumns[i].colors);
-            blockColumns[i].SetParent(this);
             Debug.Log("Spawned Block Column");
         }
     }

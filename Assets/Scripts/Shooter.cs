@@ -13,6 +13,7 @@ public class Shooter : MonoBehaviour
     private bool isShooting = false;
     private float shootTimer = 0f;
     private ShooterColumn parentShooterColumn;
+    private ShooterSlot parentShooterSlot;
 
     // Start is called before the first frame update
     void Start()
@@ -37,14 +38,8 @@ public class Shooter : MonoBehaviour
             
             if (bulletCount <= 0)
             {
-                if(parentShooterColumn != null)
-                {
-                    parentShooterColumn.UpdateColumn();
-                }
-                else 
-                { 
-                    Debug.LogWarning("Parent Shooter Column is null!"); 
-                }
+                parentShooterSlot.SetShooter(null);
+                Destroy(gameObject);
                 StartCoroutine(CheckAfterShootAndDestroy());
             }
         }
@@ -55,15 +50,25 @@ public class Shooter : MonoBehaviour
         parentShooterColumn = shooterColumn;
     }
 
+    public void SetParentShooterSlot(ShooterSlot shooterSlot)
+    {
+        parentShooterSlot = shooterSlot;
+    }
+
     private void OnMouseDown()
     {
-        //ChangeShootingState();
+        int index = ShooterManager.Instance.GetIndexAvailableShooterSlot();
+        if (parentShooterColumn != null && parentShooterColumn.IsHeadOfColumn(this) && index != -1)
+        {
+            ShooterManager.Instance.AddShooterIntoEnableRow(this, index);
+            parentShooterColumn.UpdateColumn();
+        }
         Invoke("ChangeShootingState", 0.5f);
     }
 
     private void ChangeShootingState()
     {
-        if (isShooting == false && parentShooterColumn.ShooterCanActived(transform.position.y) == true)
+        if (isShooting == false && ShooterManager.Instance.ShooterCanActived(transform.position.y) == true)
         {
             Debug.Log("Enabling shooting");
             isShooting = true;

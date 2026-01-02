@@ -200,7 +200,7 @@ Transform:
   m_GameObject: {fileID: 6035685300546938361}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1807969574195007901}
@@ -298,7 +298,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletCount: 20
-  color: {r: 1, g: 1, b: 1, a: 1}
+  color:
+    serializedVersion: 2
+    rgba: 0
   shootRate: 10
   bulletPrefab: {fileID: 6924538694335333695, guid: 8c1c6e93d4003bc4d9f2dd022716ae02, type: 3}
   bulletCountText: {fileID: 2233563545362909966}
