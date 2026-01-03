@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Shooter : MonoBehaviour
 {
@@ -81,6 +83,13 @@ public class Shooter : MonoBehaviour
         if (indexTarget >= 0 && bulletCount > 0)
         {
             Debug.Log("Shooting");
+            // Rotate towards target
+            Vector3 dir = BlockManager.Instance.GetColumnPositionWithId(indexTarget) - transform.position;
+            dir.z = 0;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+            Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 20f);
+            // Instantiate bullet
             GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position, transform.rotation);
             bullet.GetComponent<Bullet>().SeekColumnWithIndex(indexTarget);
             bullet.GetComponent<Bullet>().SetSpeed(1f / shootRate);
@@ -89,7 +98,8 @@ public class Shooter : MonoBehaviour
         }
         else
         {
-            if(indexTarget < 0)
+            transform.rotation = Quaternion.identity;
+            if (indexTarget < 0)
             {
                 Debug.Log("No target found for color: " + color);
             }

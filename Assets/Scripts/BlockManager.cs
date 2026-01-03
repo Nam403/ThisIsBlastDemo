@@ -15,7 +15,11 @@ public class BlockManager : MonoBehaviour
     
     private BlockColumn[] blockColumns;
     private int numberOfBlocks;
+    private int startNumberOfBlocks;
     private bool levelCompleted = false;
+
+    public static event System.Action OnLevelCompleted;
+    public static event System.Action<float> UpdateBlockStatus;
 
     public static BlockManager Instance { get; private set; }
     private void Awake()
@@ -33,15 +37,10 @@ public class BlockManager : MonoBehaviour
     {
         if (numberOfBlocks == 0 && levelCompleted == false)
         {
-            CompleteLevel();
+            Debug.Log("Level Completed!");
+            OnLevelCompleted?.Invoke();
+            levelCompleted = true;
         }
-    }
-
-    private void CompleteLevel()
-    {
-        levelCompleted = true;
-        Debug.Log("Level Completed!");
-        // Implement level completion logic here
     }
 
     public void InitDictionaryForSearch(BlockDataColumn[] blockDataColumns)
@@ -61,6 +60,7 @@ public class BlockManager : MonoBehaviour
 
     public void UpdateNumberOfBlocks(int num)
     {
+        UpdateBlockStatus?.Invoke((float)(startNumberOfBlocks - numberOfBlocks) / (float)(startNumberOfBlocks));
         numberOfBlocks -= num;
     }
 
@@ -68,10 +68,11 @@ public class BlockManager : MonoBehaviour
     {
         levelCompleted = false;
         numberOfBlocks = 0;
-        for(int i = 0; i < blockDataColumns.Length; i++)
+        for (int i = 0; i < blockDataColumns.Length; i++)
         {
             numberOfBlocks += blockDataColumns[i].colors.Count;
         }
+        startNumberOfBlocks = numberOfBlocks;
         this.numberOfColumns = blockDataColumns.Length;
         rootPosition.x = -((1f * numberOfColumns) / 2f - .5f) * distanceColumn;
         blockColumns = new BlockColumn[numberOfColumns];

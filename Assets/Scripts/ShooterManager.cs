@@ -31,6 +31,13 @@ public class ShooterManager : MonoBehaviour
     public void InitEnableShooterRow(int numberEnableShooter)
     {
         shooterRowPosition.x = -((1f * numberEnableShooter) / 2f - .5f) * distanceColumn;
+        if(enableShooterSlots.Count > 0)
+        {
+            foreach (ShooterSlot slot in enableShooterSlots)
+            {
+                Destroy(slot.gameObject);
+            }
+        }
         enableShooterSlots.Clear();
         for (int i = 0; i < numberEnableShooter; i++)
         {

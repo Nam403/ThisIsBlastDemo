@@ -18,7 +18,6 @@ public class BlockColumn : MonoBehaviour
         if(blocks.Count == 0 && isEmpty == false)
         {
             isEmpty = true;
-            BlockManager.Instance.UpdateNumberOfBlocks(numberOfBlocks);
             Debug.Log("Block Column is empty, notifying Block Manager.");
         }
     }
@@ -50,6 +49,7 @@ public class BlockColumn : MonoBehaviour
     {
         Destroy(blocks[0].gameObject);
         blocks.Remove(blocks[0]);
+        BlockManager.Instance.UpdateNumberOfBlocks(1);
         Vector3 step = new Vector3(0, distanceBlock, 0);
         for (int i = 0; i < blocks.Count; i++)
         {
