@@ -11,10 +11,18 @@ public class ShooterColumn : MonoBehaviour
 
     private List<Shooter> shooters = new List<Shooter>();
 
+    public void Clear()
+    {
+        foreach (Shooter shooter in shooters)
+        {
+            Destroy(shooter.gameObject);
+        }
+        shooters.Clear();
+    }
+
     public void SpawnShooters(List<ShooterData> shooterDatas)
     {
         numberOfShooters = shooterDatas.Count;
-        shooters.Clear();
         Vector3 vectorDistance = new Vector3(0, distanceShooter, 0);
         for (int i = 0; i < numberOfShooters; i++)
         {
@@ -37,6 +45,11 @@ public class ShooterColumn : MonoBehaviour
     public void UpdateColumn()
     {
         shooters.Remove(shooters[0]);
+        if (shooters.Count == 0)
+        {
+            Clear();
+            ShooterManager.Instance.UpdateNumberEmptyColumn();
+        }
         Vector3 step = new Vector3(0, distanceShooter, 0);
         for (int i = 0; i < shooters.Count; i++)
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour { 
     [SerializeField] private LevelData levelData;
-    private int level = 1;
+    private int level = 2;
     [SerializeField] private BlockManager blockManager;
     [SerializeField] private ShooterManager shooterManager;
     [SerializeField] private CompleteLevelUI completeLevelUI;
@@ -26,11 +26,15 @@ public class GameManager : MonoBehaviour {
     private void OnEnable()
     {
         BlockManager.OnLevelCompleted += completeLevelUI.Show;
+        ShooterManager.OnAllShootersStucked += gameOverUI.Show;
+        ShooterManager.OnShootingCannotContinue += gameOverUI.Show;
     }
 
     private void OnDisable()
     {
         BlockManager.OnLevelCompleted -= completeLevelUI.Show;
+        ShooterManager.OnAllShootersStucked -= gameOverUI.Show;
+        ShooterManager.OnShootingCannotContinue -= gameOverUI.Show;
     }
 
     // Start is called before the first frame update
@@ -47,8 +51,11 @@ public class GameManager : MonoBehaviour {
 
     public void LoadNextLevel()
     {
+        blockManager.Clear();
+        shooterManager.Clear();
         completeLevelUI.Hide();
         level++;
+        mainUI.UpdateLevelText(level);
         mainUI.UpdateScore();
         mainUI.ResetProcessBar();
         SetUpLevel(level);
@@ -56,7 +63,9 @@ public class GameManager : MonoBehaviour {
 
     public void RetryLevel()
     {
-        completeLevelUI.Hide();
+        blockManager.Clear();
+        shooterManager.Clear();
+        gameOverUI.Hide();
         mainUI.ResetProcessBar();
         SetUpLevel(level);
     }
@@ -64,6 +73,7 @@ public class GameManager : MonoBehaviour {
     private void SetUpLevel(int level)
     {
         this.level = level;
+        mainUI.UpdateLevelText(level);
         levelData = Resources.Load<LevelData>($"LevelDatas/LevelData{level}");
         if (levelData != null) {
             blockManager.SpawnBlockColumns(levelData.blockDataColumns);
@@ -73,7 +83,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            Debug.LogError($"LevelData{level} not found in Resources/ScriptableObjects/");
+            Debug.LogError($"LevelData{level} not found!");
         }
     }
 }

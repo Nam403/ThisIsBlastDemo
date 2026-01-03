@@ -304,3 +304,4 @@ MonoBehaviour:
   shootRate: 10
   bulletPrefab: {fileID: 6924538694335333695, guid: 8c1c6e93d4003bc4d9f2dd022716ae02, type: 3}
   bulletCountText: {fileID: 2233563545362909966}
+  timeOutStuck: 1

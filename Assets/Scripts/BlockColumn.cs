@@ -17,16 +17,25 @@ public class BlockColumn : MonoBehaviour
     {
         if(blocks.Count == 0 && isEmpty == false)
         {
-            isEmpty = true;
+            Clear();
             Debug.Log("Block Column is empty, notifying Block Manager.");
         }
+    }
+
+    public void Clear()
+    {
+        foreach (Block block in blocks)
+        {
+            Destroy(block.gameObject);
+        }
+        blocks.Clear();
+        isEmpty = true;
     }
 
     public void SpawnBlocks(List<Color32> colors)
     {
         isEmpty = false;
         numberOfBlocks = colors.Count;
-        blocks.Clear();
         Vector3 vectorDistance = new Vector3(0, distanceBlock, 0);
         for(int i = 0; i < numberOfBlocks; i++)
         {
@@ -47,9 +56,9 @@ public class BlockColumn : MonoBehaviour
 
     public void UpdateColumn()
     {
+        if(blocks.Count == 0) return;
         Destroy(blocks[0].gameObject);
         blocks.Remove(blocks[0]);
-        BlockManager.Instance.UpdateNumberOfBlocks(1);
         Vector3 step = new Vector3(0, distanceBlock, 0);
         for (int i = 0; i < blocks.Count; i++)
         {

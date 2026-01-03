@@ -15,6 +15,12 @@ public class ShooterManager : MonoBehaviour
 
     private List<ShooterColumn> shooterColumns = new List<ShooterColumn>();
     private List<ShooterSlot> enableShooterSlots = new List<ShooterSlot>();
+    private int numberEmptyColumn = 0;
+    private int numberStuckedSlot = 0;
+    private int maxNumberStuckedSlot = 0;
+
+    public static event System.Action OnAllShootersStucked;
+    public static event System.Action OnShootingCannotContinue;
 
     public static ShooterManager Instance { get; private set; }
     private void Awake()
@@ -28,17 +34,27 @@ public class ShooterManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void InitEnableShooterRow(int numberEnableShooter)
+    public void Clear()
     {
-        shooterRowPosition.x = -((1f * numberEnableShooter) / 2f - .5f) * distanceColumn;
-        if(enableShooterSlots.Count > 0)
+        foreach (ShooterColumn column in shooterColumns)
         {
-            foreach (ShooterSlot slot in enableShooterSlots)
-            {
-                Destroy(slot.gameObject);
-            }
+            column.Clear();
+            Destroy(column.gameObject);
+        }
+        shooterColumns.Clear();
+        foreach (ShooterSlot slot in enableShooterSlots)
+        {
+            slot.Clear();
+            Destroy(slot.gameObject);
         }
         enableShooterSlots.Clear();
+    }
+
+    public void InitEnableShooterRow(int numberEnableShooter)
+    {
+        numberStuckedSlot = 0;
+        maxNumberStuckedSlot = numberEnableShooter;
+        shooterRowPosition.x = -((1f * numberEnableShooter) / 2f - .5f) * distanceColumn;
         for (int i = 0; i < numberEnableShooter; i++)
         {
             ShooterSlot newShooterSlot = Instantiate(shooterSlotPrefab, shooterRowPosition + new Vector3(i * distanceColumn, 0, 0), transform.rotation);
@@ -48,7 +64,7 @@ public class ShooterManager : MonoBehaviour
 
     public void SpawnShooterColumns(ShooterDataColumn[] shooterDataColumns)
     {
-        shooterColumns.Clear();
+        numberEmptyColumn = 0;
         this.numberOfColumns = shooterDataColumns.Length;
         rootPosition.x = -((1f * numberOfColumns) / 2f - .5f) * distanceColumn;
         Vector3 step = new Vector3(distanceColumn, 0, 0);
@@ -85,5 +101,49 @@ public class ShooterManager : MonoBehaviour
     public void AddShooterIntoEnableRow(Shooter shooter, int index)
     {
         enableShooterSlots[index].SetShooter(shooter);
+    }
+
+    public void UpdateNumberStuckedSlot(int num)
+    {
+        numberStuckedSlot += num;
+        Debug.Log("Number of stucked slots increased to " + numberStuckedSlot);
+        if (numberStuckedSlot >= maxNumberStuckedSlot)
+        {
+            Debug.Log("All shooters are stucked! Game Over!");
+            OnAllShootersStucked?.Invoke();
+        }
+    }
+
+    public void UpdateNumberEmptyColumn()
+    {
+        numberEmptyColumn++;
+        Debug.Log("Number of empty shooter columns: " + numberEmptyColumn);
+        if (numberEmptyColumn == shooterColumns.Count)
+        {
+            Debug.Log("All shooter columns are empty!");
+            InvokeRepeating("CheckShootingIsCompleted", .5f, .5f);
+        }
+    }
+
+    private void CheckShootingIsCompleted()
+    {
+        int emptySlotCount = 0;
+        for(int i = 0; i < enableShooterSlots.Count; i++)
+        {
+            if (enableShooterSlots[i].HaveShooter() == false)
+            {
+                emptySlotCount++;
+            }
+        }
+        Debug.Log("Checking shooting status: empty slots = " + emptySlotCount + ", stucked slots = " + numberStuckedSlot);
+        if (emptySlotCount == maxNumberStuckedSlot)
+        {
+            CancelInvoke("CheckShootingIsCompleted");
+        }
+        if (emptySlotCount < maxNumberStuckedSlot && emptySlotCount + numberStuckedSlot == maxNumberStuckedSlot)
+        {
+            CancelInvoke("CheckShootingIsCompleted");
+            OnShootingCannotContinue?.Invoke();
+        }
     }
 }

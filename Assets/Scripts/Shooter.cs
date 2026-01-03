@@ -16,6 +16,7 @@ public class Shooter : MonoBehaviour
     private float shootTimer = 0f;
     private ShooterColumn parentShooterColumn;
     private ShooterSlot parentShooterSlot;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +84,7 @@ public class Shooter : MonoBehaviour
         if (indexTarget >= 0 && bulletCount > 0)
         {
             Debug.Log("Shooting");
+            parentShooterSlot.SetStuckedState(false);
             // Rotate towards target
             Vector3 dir = BlockManager.Instance.GetColumnPositionWithId(indexTarget) - transform.position;
             dir.z = 0;
@@ -101,7 +103,9 @@ public class Shooter : MonoBehaviour
             transform.rotation = Quaternion.identity;
             if (indexTarget < 0)
             {
-                Debug.Log("No target found for color: " + color);
+                transform.rotation = Quaternion.identity;
+                parentShooterSlot.SetStuckedState(true);
+                Debug.Log("Slot is Stucked. No target found for color: " + color);
             }
             else
             {

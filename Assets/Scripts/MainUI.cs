@@ -10,6 +10,7 @@ public class MainUI : MonoBehaviour
     private int score = 300;
     [SerializeField] private int deltaScore = 10;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Image processBar;
 
     private void Awake()
@@ -43,5 +44,10 @@ public class MainUI : MonoBehaviour
     {
         Debug.Log("Updating process bar to: " + progress);
         processBar.fillAmount = progress;
+    }
+
+    public void UpdateLevelText(int level)
+    {
+        levelText.text = "Level " + level.ToString();
     }
 }

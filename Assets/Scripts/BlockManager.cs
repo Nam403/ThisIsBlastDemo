@@ -15,7 +15,7 @@ public class BlockManager : MonoBehaviour
     
     private BlockColumn[] blockColumns;
     private int numberOfBlocks;
-    private int startNumberOfBlocks;
+    private int maxNumberOfBlocks;
     private bool levelCompleted = false;
 
     public static event System.Action OnLevelCompleted;
@@ -43,10 +43,21 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    public void InitDictionaryForSearch(BlockDataColumn[] blockDataColumns)
+    public void Clear()
     {
+        foreach (BlockColumn column in blockColumns)
+        {
+            column.Clear();
+        }
+        blockColumns = null;
+        numberOfBlocks = 0;
+        maxNumberOfBlocks = 0;
         searchIndexColumns.Clear();
         missIndexComs.Clear();
+    }
+
+    public void InitDictionaryForSearch(BlockDataColumn[] blockDataColumns)
+    {
         foreach (BlockDataColumn column in blockDataColumns)
         {
             foreach(Color32 color in column.colors)
@@ -60,7 +71,7 @@ public class BlockManager : MonoBehaviour
 
     public void UpdateNumberOfBlocks(int num)
     {
-        UpdateBlockStatus?.Invoke((float)(startNumberOfBlocks - numberOfBlocks) / (float)(startNumberOfBlocks));
+        UpdateBlockStatus?.Invoke(1f - (float)numberOfBlocks / (float)maxNumberOfBlocks);
         numberOfBlocks -= num;
     }
 
@@ -72,7 +83,7 @@ public class BlockManager : MonoBehaviour
         {
             numberOfBlocks += blockDataColumns[i].colors.Count;
         }
-        startNumberOfBlocks = numberOfBlocks;
+        maxNumberOfBlocks = numberOfBlocks;
         this.numberOfColumns = blockDataColumns.Length;
         rootPosition.x = -((1f * numberOfColumns) / 2f - .5f) * distanceColumn;
         blockColumns = new BlockColumn[numberOfColumns];
@@ -135,5 +146,6 @@ public class BlockManager : MonoBehaviour
     public void UpdateColumnWithId(int index)
     {
         blockColumns[index].UpdateColumn();
+        UpdateNumberOfBlocks(1);
     }
 }

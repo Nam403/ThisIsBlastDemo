@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShooterSlot : MonoBehaviour
 {
     private Shooter shooter;
+    private bool isStucked = false;
     public void SetShooter(Shooter shooter)
     {
         this.shooter = shooter;
@@ -18,5 +19,34 @@ public class ShooterSlot : MonoBehaviour
     public bool HaveShooter()
     {
         return shooter != null;
+    }
+
+    public bool IsStucked()
+    {
+        return isStucked;
+    }
+
+    public void Clear()
+    {
+        if (shooter != null)
+        {
+            Destroy(shooter.gameObject);
+            shooter = null;
+        }
+        isStucked = false;
+    }
+
+
+    public void SetStuckedState(bool stucked)
+    {
+        if(stucked == true && isStucked == false)
+        {
+            ShooterManager.Instance.UpdateNumberStuckedSlot(1);
+        }
+        if(stucked == false && isStucked == true)
+        {
+            ShooterManager.Instance.UpdateNumberStuckedSlot(-1);
+        }
+        isStucked = stucked;
     }
 }
