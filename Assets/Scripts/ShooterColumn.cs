@@ -7,7 +7,6 @@ public class ShooterColumn : MonoBehaviour
 {
     [SerializeField] private float distanceShooter = 1f;
     [SerializeField] private Shooter shooterPrefab;
-    [SerializeField] private int numberOfShooters = 1;
 
     private List<Shooter> shooters = new List<Shooter>();
 
@@ -22,7 +21,7 @@ public class ShooterColumn : MonoBehaviour
 
     public void SpawnShooters(List<ShooterData> shooterDatas)
     {
-        numberOfShooters = shooterDatas.Count;
+        int numberOfShooters = shooterDatas.Count;
         Vector3 vectorDistance = new Vector3(0, distanceShooter, 0);
         for (int i = 0; i < numberOfShooters; i++)
         {
@@ -48,13 +47,17 @@ public class ShooterColumn : MonoBehaviour
         if (shooters.Count == 0)
         {
             Clear();
-            ShooterManager.Instance.UpdateNumberEmptyColumn();
+            ShooterManager.Instance.UpdateListColumn(this);
+            Destroy(gameObject);
         }
-        Vector3 step = new Vector3(0, distanceShooter, 0);
-        for (int i = 0; i < shooters.Count; i++)
+        else 
         {
-            shooters[i].transform.position += step;
-        }
+            Vector3 step = new Vector3(0, distanceShooter, 0);
+            for (int i = 0; i < shooters.Count; i++)
+            {
+                shooters[i].transform.position += step;
+            }
+        }      
     }
 
     public bool IsHeadOfColumn(Shooter shooter)

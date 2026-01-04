@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour { 
     [SerializeField] private LevelData levelData;
-    private int level = 2;
+    private int level = 1;
     [SerializeField] private BlockManager blockManager;
     [SerializeField] private ShooterManager shooterManager;
     [SerializeField] private CompleteLevelUI completeLevelUI;
@@ -43,19 +43,12 @@ public class GameManager : MonoBehaviour {
         SetUpLevel(level);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void LoadNextLevel()
     {
         blockManager.Clear();
         shooterManager.Clear();
         completeLevelUI.Hide();
         level++;
-        mainUI.UpdateLevelText(level);
         mainUI.UpdateScore();
         mainUI.ResetProcessBar();
         SetUpLevel(level);

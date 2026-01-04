@@ -8,19 +8,8 @@ public class BlockColumn : MonoBehaviour
 {
     [SerializeField] private float distanceBlock = 0.4f;
     [SerializeField] private Block blockPrefab;
-    [SerializeField] private int numberOfBlocks = 10;
 
     private List<Block> blocks = new List<Block>();
-    private bool isEmpty = false;
-
-    private void Update()
-    {
-        if(blocks.Count == 0 && isEmpty == false)
-        {
-            Clear();
-            Debug.Log("Block Column is empty, notifying Block Manager.");
-        }
-    }
 
     public void Clear()
     {
@@ -29,13 +18,11 @@ public class BlockColumn : MonoBehaviour
             Destroy(block.gameObject);
         }
         blocks.Clear();
-        isEmpty = true;
     }
 
     public void SpawnBlocks(List<Color32> colors)
     {
-        isEmpty = false;
-        numberOfBlocks = colors.Count;
+        int numberOfBlocks = colors.Count;
         Vector3 vectorDistance = new Vector3(0, distanceBlock, 0);
         for(int i = 0; i < numberOfBlocks; i++)
         {
@@ -56,15 +43,21 @@ public class BlockColumn : MonoBehaviour
 
     public void UpdateColumn()
     {
-        if(blocks.Count == 0) return;
-        Destroy(blocks[0].gameObject);
-        blocks.Remove(blocks[0]);
-        Vector3 step = new Vector3(0, distanceBlock, 0);
-        for (int i = 0; i < blocks.Count; i++)
+        if (blocks.Count == 0) {
+            Clear();
+            Debug.Log("Block Column is empty, notifying Block Manager.");
+        }
+        else
         {
-            blocks[i].transform.position -= step;
-            //blocks[i].SetIndexText(i);
-        }    
+            Destroy(blocks[0].gameObject);
+            blocks.Remove(blocks[0]);
+            Vector3 step = new Vector3(0, distanceBlock, 0);
+            for (int i = 0; i < blocks.Count; i++)
+            {
+                blocks[i].transform.position -= step;
+                //blocks[i].SetIndexText(i);
+            }
+        }   
     }
 
     public bool HeadColumnIsColor(Color32 color)

@@ -16,7 +16,6 @@ public class BlockManager : MonoBehaviour
     private BlockColumn[] blockColumns;
     private int numberOfBlocks;
     private int maxNumberOfBlocks;
-    private bool levelCompleted = false;
 
     public static event System.Action OnLevelCompleted;
     public static event System.Action<float> UpdateBlockStatus;
@@ -33,21 +32,12 @@ public class BlockManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
-    {
-        if (numberOfBlocks == 0 && levelCompleted == false)
-        {
-            Debug.Log("Level Completed!");
-            OnLevelCompleted?.Invoke();
-            levelCompleted = true;
-        }
-    }
-
     public void Clear()
     {
         foreach (BlockColumn column in blockColumns)
         {
             column.Clear();
+            Destroy(column.gameObject);
         }
         blockColumns = null;
         numberOfBlocks = 0;
@@ -73,11 +63,15 @@ public class BlockManager : MonoBehaviour
     {
         UpdateBlockStatus?.Invoke(1f - (float)numberOfBlocks / (float)maxNumberOfBlocks);
         numberOfBlocks -= num;
+        if (numberOfBlocks == 0)
+        {
+            Debug.Log("Level Completed!");
+            OnLevelCompleted?.Invoke();
+        }
     }
 
     public void SpawnBlockColumns(BlockDataColumn[] blockDataColumns)
     {
-        levelCompleted = false;
         numberOfBlocks = 0;
         for (int i = 0; i < blockDataColumns.Length; i++)
         {
