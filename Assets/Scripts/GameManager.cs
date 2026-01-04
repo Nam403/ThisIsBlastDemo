@@ -76,7 +76,8 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            Debug.LogError($"LevelData{level} not found!");
+            Debug.LogError($"LevelData{level} not found! Quit Game!");
+            Application.Quit();
         }
     }
 }
